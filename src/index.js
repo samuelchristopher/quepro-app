@@ -1,13 +1,18 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
-import './index.css'
+import { BrowserRouter as Router, Route } from 'react-router-dom'
 import QueProApp from './QueProApp/QueProApp'
 import registerServiceWorker from './registerServiceWorker'
+import './index.css'
 
 const App = () => (
   <MuiThemeProvider>
-    <QueProApp />
+    <div>
+      <Router>
+        <Route path="/" component={QueProApp} />
+      </Router>
+    </div>
   </MuiThemeProvider>
 )
 
