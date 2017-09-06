@@ -1,8 +1,15 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import registerServiceWorker from './registerServiceWorker';
+import React from 'react'
+import ReactDOM from 'react-dom'
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
+import './index.css'
+import QueProApp from './QueProApp/QueProApp'
+import registerServiceWorker from './registerServiceWorker'
 
-ReactDOM.render(<App />, document.getElementById('root'));
-registerServiceWorker();
+const App = () => (
+  <MuiThemeProvider>
+    <QueProApp />
+  </MuiThemeProvider>
+)
+
+ReactDOM.render(<App />, document.getElementById('root'))
+registerServiceWorker()
