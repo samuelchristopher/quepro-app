@@ -16,12 +16,15 @@ Developed by Samuel Paul Christopher
 <link rel="import" href="../bower_components/iron-pages/iron-pages.html">
 <link rel="import" href="../bower_components/iron-selector/iron-selector.html">
 <link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../bower_components/polymerfire/firebase-app.html">
+<link rel="import" href="../bower_components/polymerfire/firebase-auth.html">
 <link rel="import" href="icons.html">
 
 <link rel="lazy-import" href="view1.html">
 <link rel="lazy-import" href="view2.html">
 <link rel="lazy-import" href="view3.html">
 <link rel="lazy-import" href="view404.html">
+<link rel="lazy-import" href="login.html">
 
 <dom-module id="quepro-app">
   <template>
@@ -97,6 +100,7 @@ Developed by Samuel Paul Christopher
             attr-for-selected="name"
             fallback-selection="view404"
             role="main">
+          <login-view name="login"></login-view>
           <view-1 name="view1"></view-1>
           <view-2 name="view2"></view-2>
           <view-3 name="view3"></view-3>
@@ -104,6 +108,19 @@ Developed by Samuel Paul Christopher
         </iron-pages>
       </app-header-layout>
     </app-drawer-layout>
+
+    <firebase-app
+      auth-domain="quepro-app.firebaseapp.com"
+      database-url="https://quepro-app.firebaseio.com"
+      api-key="AIzaSyAIbdEm_m3IjYRm7zPYqkMFGY6CTKpegaY"
+      storage-bucket="quepro-app.appspot.com"
+      messaging-sender-id="1013803883791">
+    </firebase-app>
+    <firebase-auth
+      id="auth"
+      user={{user}}
+      provider="google">
+    </firebase-auth>
   </template>
 
   <script>
@@ -130,7 +147,8 @@ Developed by Samuel Paul Christopher
       }
 
       _routePageChanged(page) {
-        this.page = page || 'view1';
+        let actual = (this.$.auth.user) ? 'view1': 'login'
+        this.page = page || actual;
 
         if (!this.$.drawer.persistent) {
           this.$.drawer.close();

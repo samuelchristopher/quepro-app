@@ -1,0 +1,52 @@
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../bower_components/iron-image/iron-image.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../bower_components/polymerfire/firebase-auth.html">
+<link rel="import" href="shared-styles.html">
+
+<dom-module id="login-view">
+  <template>
+    <style include="shared-styles">
+    </style>
+    <div class="view">
+      <p class="view-title">login</p>
+      <iron-image style="width: 220px; height: 200px; margin:0 auto; background-color: lightgray;" position="center" sizing="cover" preload fade src="images/quepro-logo.png"></iron-image>
+      <paper-button on-tap="signInWithGoogle">Sign In With Google</paper-button>
+      <a id="redirect" hidden href="/view1"></a>
+    </div>
+    <firebase-auth
+      id="auth"
+      user="{{user}}"
+      status-known="{{statusKnown}}"
+      provider="google">
+      </firebase-auth>
+  </template>
+  <script>
+    class LoginView extends Polymer.Element {
+      static get is() { return 'login-view' }
+      static get properties() {
+        return {
+          user: {
+            type: Object
+          },
+          statusKnown: {
+            type: Object
+          }
+        }
+      }
+      signInWithGoogle() {
+        let redirect = this.$.redirect
+        this.$.auth.signInWithPopup()
+        .then(re => {
+          console.log(re)
+          window.history.pushState({}, null, '/view1');
+          window.dispatchEvent(new CustomEvent('location-changed'));
+        })
+        .catch(err => {
+          console.log(err)
+        })
+      }
+    }
+    window.customElements.define(LoginView.is, LoginView)
+  </script>
+</dom-module>
