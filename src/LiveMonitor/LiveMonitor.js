@@ -1,8 +1,11 @@
-import React from 'react'
-import { Route, Redirect } from 'react-router-dom'
+import React, { Component } from 'react'
 
-const LiveMonitor = () => (
-  <h1>Live monitor at your service!</h1>
-)
+class LiveMonitor extends Component {
+  render() {
+    return (
+      <h1>Hii</h1>
+    )
+  }
+}
 
 export default LiveMonitor

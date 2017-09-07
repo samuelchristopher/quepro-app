@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import RaisedButton from 'material-ui/RaisedButton'
+import firebase from 'firebase/app'
+import 'firebase/auth'
 
 class LoginView extends Component {
   constructor() {
@@ -8,7 +10,15 @@ class LoginView extends Component {
   }
 
   handleTap() {
-    console.log('signing in with google')
+    let provider = new firebase.auth.GoogleAuthProvider()
+    firebase.auth().signInWithPopup(provider)
+    .then(user => {
+      console.log('sign in success', user)
+      this.props.history.go('/')
+    })
+    .catch(err => {
+      console.log(err)
+    })
   }
 
   render() {
