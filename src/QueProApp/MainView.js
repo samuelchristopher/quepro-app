@@ -1,9 +1,13 @@
 import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
 
 class MainView extends Component {
   render() {
     return (
-      <h1>Welcome Home!</h1>
+      <div>
+        <h1>Welcome Homes!</h1>
+        <Link to="/another">another</Link>
+      </div>
     )
   }
 }

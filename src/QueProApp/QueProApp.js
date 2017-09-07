@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
-import { Link, Route } from 'react-router-dom'
 import LoginView from '../Login/LoginView'
 import MainView from  './MainView'
 import LiveMonitor from '../LiveMonitor/LiveMonitor'
-import ProtectedRoute from '../RouteTypes/ProtectedRoute'
-import PublicRoute from '../RouteTypes/PublicRoute'
+import UserRoute from  '../RouteTypes/UserRoute'
+import GuestRoute from  '../RouteTypes/GuestRoute'
 import AppBar from 'material-ui/AppBar'
-import logo from '../logo.svg'
+import firebase from 'firebase/app'
+import 'firebase/auth'
 import './QueProApp.css'
 
 
@@ -18,6 +18,20 @@ class QueProApp extends Component {
     }
   }
 
+  componentWillMount() {
+    firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+        return this.setState({
+          isAuthenticated: true,
+          user
+        })
+      }
+      return this.setState({
+        isAuthenticated: false
+      })
+    })
+  }
+
   render() {
     return (
       <div>
@@ -26,9 +40,9 @@ class QueProApp extends Component {
           iconClassNameRight="muidocs-icon-navigation-expand-more"
         />
         <div className="container">
-          <ProtectedRoute path={`${this.props.match.url}`} component={MainView} />
-          <ProtectedRoute path={`${this.props.match.url}live-monitor`} component={LiveMonitor} />
-          <PublicRoute path={`${this.props.match.url}login`} component={LoginView} />
+          <UserRoute user={this.state.user} isAuthenticated={this.state.isAuthenticated} path={`${this.props.match.url}`} exact component={MainView} />
+          <UserRoute user={this.state.user} isAuthenticated={this.state.isAuthenticated} path={`${this.props.match.url}another`} exact component={LiveMonitor} />
+          <GuestRoute isAuthenticated={this.state.isAuthenticated} path={`${this.props.match.url}login`} exact component={LoginView} />
         </div>
       </div>
 
