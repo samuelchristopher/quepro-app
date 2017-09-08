@@ -2,12 +2,14 @@ import React, { Component } from 'react'
 import LoginView from '../Login/LoginView'
 import MainView from  './MainView'
 import LiveMonitor from '../LiveMonitor/LiveMonitor'
+import Mock from '../Mock/Mock'
 import UserRoute from  '../RouteTypes/UserRoute'
 import GuestRoute from  '../RouteTypes/GuestRoute'
 import MenuItem from 'material-ui/MenuItem'
 import AppBar from 'material-ui/AppBar'
 import Drawer from 'material-ui/Drawer'
 import firebase from 'firebase/app'
+import { Link } from 'react-router-dom'
 import 'firebase/auth'
 import './QueProApp.css'
 
@@ -64,11 +66,12 @@ class QueProApp extends Component {
           width={200}
           open={this.state.open}
           onRequestChange={(open) => this.setState({open})} >
-          <MenuItem onTouchTap={this.handleClose}>Login</MenuItem>
+          <MenuItem onTouchTap={this.handleClose}><Link to="/mock">Mock environment</Link></MenuItem>
         </Drawer>
         <div className="container">
           <UserRoute user={this.state.user} isAuthenticated={this.state.isAuthenticated} path={`${this.props.match.url}`} exact component={MainView} />
           <UserRoute user={this.state.user} isAuthenticated={this.state.isAuthenticated} path={`${this.props.match.url}another`} exact component={LiveMonitor} />
+          <UserRoute user={this.state.user} isAuthenticated={this.state.isAuthenticated} path={`${this.props.match.url}mock`} exact component={Mock} />
           <GuestRoute isAuthenticated={this.state.isAuthenticated} path={`${this.props.match.url}login`} exact component={LoginView} />
         </div>
       </div>

@@ -3,12 +3,19 @@ import firebase from 'firebase/app'
 import 'firebase/database'
 
 class DataFromMonitor extends Component {
+  constructor() {
+    super()
+    this.state = {
+      output: ''
+    }
+  }
   componentWillMount() {
-    // get data and setState
+    let ref = firebase.database().ref('testRawData')
+    ref.on('value', snapshot => this.setState({ output: snapshot.val().outputText })).bind(this)
   }
   render() {
     return (
-      <h1>Data from monitor...</h1>
+      <p>raw data from monitor: {this.state.output}</p>
     )
   }
 }
