@@ -7,6 +7,9 @@
 
 // To learn more about the benefits of this model, read https://goo.gl/KwvDNy.
 // This link also includes instructions on opting out of this behavior.
+import firebase from 'firebase/app'
+import 'firebase/messaging'
+
 
 const isLocalhost = Boolean(
   window.location.hostname === 'localhost' ||
@@ -44,6 +47,18 @@ export default function register() {
 }
 
 function registerValidSW(swUrl) {
+  let config = {
+    apiKey: "AIzaSyAIbdEm_m3IjYRm7zPYqkMFGY6CTKpegaY",
+    authDomain: "quepro-app.firebaseapp.com",
+    databaseURL: "https://quepro-app.firebaseio.com",
+    projectId: "quepro-app",
+    storageBucket: "quepro-app.appspot.com",
+    messagingSenderId: "1013803883791"
+  }
+  firebase.initializeApp(config)
+
+  const messaging = firebase.messaging()
+
   navigator.serviceWorker
     .register(swUrl)
     .then(registration => {
